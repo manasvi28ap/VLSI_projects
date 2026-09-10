@@ -1,1 +1,41 @@
+module calculator_tb;
+reg clk,rst;
+reg start;
+reg [1:0]opcode;
+reg [3:0]a;
+reg [3:0]b;
+
+
+
+wire [7:0]result;
+calculator uut (
+.clk(clk),
+.rst(rst),
+.opcode(opcode),
+.a(a),
+.b(b),
+.result(result),
+.start(start)
+);
+
+always  #5 clk=~clk;
+initial begin
+clk=0;
+start=1;
+rst=0;
+opcode=2'b00;a=4'b0000;b=4'b0000;#5;
+rst=1;
+
+opcode=2'b00;a=4'b0100;b=4'b0011;#10;
+
+opcode=2'b01;a=4'b0110;b=4'b0010;#20;
+opcode=2'b10;a=4'b0010;b=4'b0011;
+start=1;#10;
+start=0;#30;
+opcode=2'b11;a=4'b1000;b=4'b0010;
+start=1;#10;
+start=0;#40;
+$finish;
+end
+endmodule
 
